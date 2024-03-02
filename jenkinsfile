@@ -41,8 +41,11 @@ pipeline {
                     // For example, deploy to your Ubuntu1 server
                     // Ensure that you have SSH keys set up for authentication
 
-                    // Example deployment using SSH with StrictHostKeyChecking=no
-                    sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.169.76 "cd /home/ubuntu/my-node-app && git pull origin master && npm install && pm2 restart your-app"'
+                    // Change to the project directory
+                    dir("/home/ubuntu/my-node-app") {
+                        // Example deployment using SSH with StrictHostKeyChecking=no
+                        sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.169.76 "git pull origin master && npm install && pm2 restart your-app"'
+                    }
                 }
             }
         }
