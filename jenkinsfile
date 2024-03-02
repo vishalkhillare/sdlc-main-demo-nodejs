@@ -10,8 +10,12 @@ pipeline {
                 }
             }
             steps {
-                echo 'Checking out code from Git...'
-                git branch: env.BRANCH_NAME, url: 'https://github.com/vishalkhillare/sdlc-main-demo-nodejs.git'
+                script {
+                    echo 'Checking out code from Git...'
+                    // Add a debug statement to print the current directory
+                    sh 'pwd'
+                    git branch: env.BRANCH_NAME, url: 'https://github.com/vishalkhillare/sdlc-main-demo-nodejs.git'
+                }
             }
         }
 
@@ -23,8 +27,10 @@ pipeline {
                 }
             }
             steps {
-                echo 'Installing project dependencies...'
-                sh 'npm install'
+                script {
+                    echo 'Installing project dependencies...'
+                    sh 'npm install'
+                }
             }
         }
 
@@ -36,8 +42,10 @@ pipeline {
                 }
             }
             steps {
-                echo 'Running tests...'
-                sh 'npm test'
+                script {
+                    echo 'Running tests...'
+                    sh 'npm test'
+                }
             }
         }
 
@@ -49,9 +57,12 @@ pipeline {
                 }
             }
             steps {
-                echo 'Deploying to Ubuntu1 server...'
-                // Include your deployment steps using SSH, e.g., git pull, npm install, pm2 restart
-                sh 'ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.169.76 "cd /home/ubuntu/my-node-app && git pull origin master && npm install && pm2 restart your-app"'
+                script {
+                    echo 'Deploying to Ubuntu1 server...'
+                    // Add debug statements and change the directory before executing the commands
+                    sh 'cd /home/ubuntu/my-node-app && pwd && ls -al'
+                    sh 'ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.169.76 "cd /home/ubuntu/my-node-app && pwd && git pull origin master && npm install && pm2 restart your-app"'
+                }
             }
         }
     }
