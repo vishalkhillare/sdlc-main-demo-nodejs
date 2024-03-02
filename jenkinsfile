@@ -41,6 +41,9 @@ pipeline {
                     // For example, deploy to your Ubuntu1 server
                     // Ensure that you have SSH keys set up for authentication
 
+                    // Create the project directory if it doesn't exist
+                    sh 'mkdir -p /home/ubuntu/my-node-app'
+
                     // Change to the project directory
                     dir("/home/ubuntu/my-node-app") {
                         // Example deployment using SSH with StrictHostKeyChecking=no
