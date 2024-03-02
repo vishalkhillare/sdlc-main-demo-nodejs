@@ -16,8 +16,11 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Install project dependencies
-                    sh 'npm install'
+                    // Print the current directory
+                    echo "Current directory: ${pwd()}"
+                    
+                    // Install project dependencies with verbose output
+                    sh 'npm install --verbose'
                 }
             }
         }
