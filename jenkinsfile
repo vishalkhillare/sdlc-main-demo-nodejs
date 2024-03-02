@@ -1,58 +1,57 @@
 pipeline {
     agent any
 
-    environment {
-        NODEJS_HOME = "/usr/bin"  // Update this with your actual path
-        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Git Checkout') {
+            when {
+                anyOf {
+                    expression { env.BRANCH_NAME == 'development' }
+                    expression { env.BRANCH_NAME == 'production' }
+                }
+            }
             steps {
-                checkout scm
+                echo 'Checking out code from Git...'
+                git branch: env.BRANCH_NAME, url: 'https://github.com/vishalkhillare/sdlc-main-demo-nodejs.git'
             }
         }
 
-        stage('Build') {
-            steps {
-                script {
-                    // Print the current directory
-                    echo "Current directory: ${pwd()}"
-                    
-                    // Install project dependencies
-                    sh 'npm install'
+        stage('Install') {
+            when {
+                anyOf {
+                    expression { env.BRANCH_NAME == 'development' }
+                    expression { env.BRANCH_NAME == 'production' }
                 }
+            }
+            steps {
+                echo 'Installing project dependencies...'
+                sh 'npm install'
             }
         }
 
         stage('Test') {
-            steps {
-                script {
-                    // Run tests
-                    sh 'npm test'
+            when {
+                anyOf {
+                    expression { env.BRANCH_NAME == 'development' }
+                    expression { env.BRANCH_NAME == 'production' }
                 }
+            }
+            steps {
+                echo 'Running tests...'
+                sh 'npm test'
             }
         }
 
         stage('Deploy') {
-            steps {
-                script {
-                    // Your deployment steps here
-                    // For example, deploy to your Ubuntu1 server
-                    // Ensure that you have SSH keys set up for authentication
-
-                    // Set the project directory
-                    def projectDir = "/var/lib/jenkins/my-node-app"
-
-                    // Create the project directory if it doesn't exist
-                    sh "mkdir -p ${projectDir}"
-
-                    // Change to the project directory
-                    dir(projectDir) {
-                        // Example deployment using SSH with StrictHostKeyChecking=no
-                        sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/key.pem ubuntu@13.127.27.143 "cd ${projectDir} && git pull origin master && npm install && pm2 restart your-app"'
-                    }
+            when {
+                anyOf {
+                    expression { env.BRANCH_NAME == 'development' }
+                    expression { env.BRANCH_NAME == 'production' }
                 }
+            }
+            steps {
+                echo 'Deploying to Ubuntu1 server...'
+                // Include your deployment steps using SSH, e.g., git pull, npm install, pm2 restart
+                sh 'ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@13.127.27.143 "cd /path/to/your/project && git pull origin master && npm install && pm2 restart your-app"'
             }
         }
     }
