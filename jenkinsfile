@@ -42,10 +42,10 @@ pipeline {
                     // Ensure that you have SSH keys set up for authentication
 
                     // Create the project directory if it doesn't exist
-                    sh 'mkdir -p /home/ubuntu/my-node-app'
+                    sh 'mkdir -p /var/lib/jenkins/my-node-app'
 
                     // Change to the project directory
-                    dir("/home/ubuntu/my-node-app") {
+                    dir("/var/lib/jenkins/my-node-app") {
                         // Example deployment using SSH with StrictHostKeyChecking=no
                         sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.169.76 "git pull origin master && npm install && pm2 restart your-app"'
                     }
