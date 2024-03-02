@@ -12,9 +12,16 @@ pipeline {
             steps {
                 script {
                     echo 'Checking out code from Git...'
+
                     // Add a debug statement to print the current directory
                     sh 'pwd'
-                    git branch: env.BRANCH_NAME, url: 'https://github.com/vishalkhillare/sdlc-main-demo-nodejs.git'
+
+                    // Use the checkout step to ensure a clean clone
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: env.BRANCH_NAME]],
+                        userRemoteConfigs: [[url: 'https://github.com/vishalkhillare/sdlc-main-demo-nodejs.git']]
+                    ])
                 }
             }
         }
@@ -59,6 +66,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying to Ubuntu1 server...'
+
                     // Add debug statements and change the directory before executing the commands
                     sh 'cd /home/ubuntu/my-node-app && pwd && ls -al'
                     sh 'ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.169.76 "cd /home/ubuntu/my-node-app && pwd && git pull origin master && npm install && pm2 restart your-app"'
