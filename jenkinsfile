@@ -42,7 +42,7 @@ pipeline {
                     // Ensure that you have SSH keys set up for authentication
 
                     // Example deployment using SSH with StrictHostKeyChecking=no
-                    sh 'ssh -o StrictHostKeyChecking=no -i /home/ubuntu/.ssh/key.pem ubuntu@65.2.169.76 "cd /home/ubuntu/my-node-app && git pull origin master && npm install && pm2 restart your-app"'
+                    sh 'ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.169.76 "cd /home/ubuntu/my-node-app && git pull origin master && npm install && pm2 restart your-app"'
                 }
             }
         }
