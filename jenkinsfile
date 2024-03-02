@@ -51,7 +51,7 @@ pipeline {
             steps {
                 echo 'Deploying to Ubuntu1 server...'
                 // Include your deployment steps using SSH, e.g., git pull, npm install, pm2 restart
-                sh 'ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@13.127.27.143 "cd /path/to/your/project && git pull origin master && npm install && pm2 restart your-app"'
+                sh 'ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@13.127.27.143 "cd /home/ubuntu/my-node-app && git pull origin master && npm install && pm2 restart your-app"'
             }
         }
     }
