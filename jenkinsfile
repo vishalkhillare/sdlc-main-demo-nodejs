@@ -1,9 +1,8 @@
-
 pipeline {
     agent any
 
     environment {
-        NODEJS_HOME = tool 'node12'
+        NODEJS_HOME = "/usr/bin"  // Update this with your actual path
         PATH = "${NODEJS_HOME}/bin:${env.PATH}"
     }
 
