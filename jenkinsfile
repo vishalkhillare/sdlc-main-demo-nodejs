@@ -41,8 +41,8 @@ pipeline {
                     // For example, deploy to your Ubuntu1 server
                     // Ensure that you have SSH keys set up for authentication
 
-                    // Example deployment using SSH
-                    sh 'ssh -i /home/ubuntu/.ssh/key.pem ubuntu@65.2.169.76 "cd /home/ubuntu && git pull origin master && npm install && pm2 restart your-app"'
+                    // Example deployment using SSH with StrictHostKeyChecking=no
+                    sh 'ssh -o StrictHostKeyChecking=no -i /home/ubuntu/.ssh/key.pem ubuntu@65.2.169.76 "cd /home/ubuntu/my-node-app && git pull origin master && npm install && pm2 restart your-app"'
                 }
             }
         }
