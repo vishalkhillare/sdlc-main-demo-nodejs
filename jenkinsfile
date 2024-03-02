@@ -1,1 +1,48 @@
 
+pipeline {
+    agent any
+
+    environment {
+        NODEJS_HOME = tool 'node12'
+        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Install project dependencies
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Run tests
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Your deployment steps here
+                    // For example, deploy to your Ubuntu1 server
+                    // Ensure that you have SSH keys set up for authentication
+
+                    // Example deployment using SSH
+                    sh 'ssh -i /path/to/your/private-key.pem ubuntu@your-ubuntu1-public-ip "cd /path/to/your/project && git pull origin master && npm install && pm2 restart your-app"'
+                }
+            }
+        }
+    }
+}
