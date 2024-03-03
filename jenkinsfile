@@ -72,7 +72,7 @@ pipeline {
                         cd /home/ubuntu/my-node-app
                         pwd
                         ls -al
-                        ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.57.79 "
+                        ssh -i /home/ubuntu/.ssh/key.pem ubuntu@65.2.57.79 "
                             cd /home/ubuntu/my-node-app
                             pwd
                             git pull origin master
