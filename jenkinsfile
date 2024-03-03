@@ -69,9 +69,6 @@ pipeline {
 
                     // Add debug statements and change the directory before executing the commands
                     sh """
-                        cd /home/ubuntu/my-node-app
-                        pwd
-                        ls -al
                         ssh -i /home/ubuntu/.ssh/key.pem ubuntu@65.2.57.79 "
                             pwd
                             git pull origin master
