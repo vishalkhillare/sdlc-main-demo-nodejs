@@ -68,8 +68,18 @@ pipeline {
                     echo 'Deploying to Ubuntu1 server...'
 
                     // Add debug statements and change the directory before executing the commands
-                    sh 'cd /home/ubuntu/my-node-app && pwd && ls -al'
-                    sh 'ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.57.79 "cd /home/ubuntu/my-node-app && pwd && git pull origin master && npm install && pm2 restart your-app"'
+                    sh """
+                        cd /home/ubuntu/my-node-app
+                        pwd
+                        ls -al
+                        ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.57.79 "
+                            cd /home/ubuntu/my-node-app
+                            pwd
+                            git pull origin master
+                            npm install
+                            pm2 restart app.js
+                        "
+                    """
                 }
             }
         }
