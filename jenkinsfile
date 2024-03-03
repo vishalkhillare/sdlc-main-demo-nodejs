@@ -73,7 +73,7 @@ pipeline {
                             ssh -i ~/.ssh/key.pem ubuntu@65.2.57.79 "
                             cd /var/lib/jenkins/workspace/djs-demo_nodejs-demo_development/
                             pwd
-                            git config --global --add safe.directory /var/lib/jenkins/workspace/djs-demo_nodejs-demo_development
+                            git config --add safe.directory /var/lib/jenkins/workspace/djs-demo_nodejs-demo_development
                             git pull origin master
                             npm install
                             pm2 restart app.js
