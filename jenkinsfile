@@ -69,7 +69,8 @@ pipeline {
 
                     // Add debug statements and change the directory before executing the commands
                     sh """
-                        ssh -i /home/ubuntu/.ssh/key.pem ubuntu@65.2.57.79 "
+                            ls ~
+                            ssh -i ~/.ssh/key.pem ubuntu@65.2.57.79 "
                             pwd
                             git pull origin master
                             npm install
