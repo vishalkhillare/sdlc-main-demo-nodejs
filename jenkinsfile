@@ -69,7 +69,7 @@ pipeline {
 
                     // Add debug statements and change the directory before executing the commands
                     sh 'cd /home/ubuntu/my-node-app && pwd && ls -al'
-                    sh 'ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.169.76 "cd /home/ubuntu/my-node-app && pwd && git pull origin master && npm install && pm2 restart your-app"'
+                    sh 'ssh -i /var/lib/jenkins/.ssh/key.pem ubuntu@65.2.57.79 "cd /home/ubuntu/my-node-app && pwd && git pull origin master && npm install && pm2 restart your-app"'
                 }
             }
         }
