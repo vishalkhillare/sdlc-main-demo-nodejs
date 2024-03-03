@@ -71,6 +71,7 @@ pipeline {
                     sh """
                             ls ~
                             ssh -i ~/.ssh/key.pem ubuntu@65.2.57.79 "
+                            cd /var/lib/jenkins/workspace/djs-demo_nodejs-demo_development/
                             pwd
                             git pull origin master
                             npm install
