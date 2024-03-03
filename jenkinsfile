@@ -73,7 +73,6 @@ pipeline {
                         pwd
                         ls -al
                         ssh -i /home/ubuntu/.ssh/key.pem ubuntu@65.2.57.79 "
-                             /home/ubuntu/my-node-app
                             pwd
                             git pull origin master
                             npm install
