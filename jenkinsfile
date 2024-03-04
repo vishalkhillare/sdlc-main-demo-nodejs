@@ -1,1 +1,86 @@
+pipeline {
+    agent any
 
+    stages {
+        stage('Git Checkout') {
+            when {
+                anyOf {
+                    expression { env.BRANCH_NAME == 'development' }
+                    expression { env.BRANCH_NAME == 'production' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Checking out code from Git...'
+
+                    // Add a debug statement to print the current directory
+                    sh 'pwd'
+
+                    // Use the checkout step to ensure a clean clone
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: env.BRANCH_NAME]],
+                        userRemoteConfigs: [[url: 'https://github.com/vishalkhillare/sdlc-main-demo-nodejs.git']]
+                    ])
+                }
+            }
+        }
+
+        stage('Install') {
+            when {
+                anyOf {
+                    expression { env.BRANCH_NAME == 'development' }
+                    expression { env.BRANCH_NAME == 'production' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Installing project dependencies...'
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Test') {
+            when {
+                anyOf {
+                    expression { env.BRANCH_NAME == 'development' }
+                    expression { env.BRANCH_NAME == 'production' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Running tests...'
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                anyOf {
+                    expression { env.BRANCH_NAME == 'development' }
+                    expression { env.BRANCH_NAME == 'production' }
+                }
+            }
+            steps {
+                script {
+                    echo 'Deploying to Ubuntu1 server...'
+
+                    // Add debug statements and change the directory before executing the commands
+                    sh """
+                            ls ~
+                            ssh -i ~/.ssh/key.pem ubuntu@65.2.57.79 "
+                            cd /var/lib/jenkins/workspace/djs-demo_nodejs-demo_development/
+                            pwd
+                            #git config --add safe.directory /var/lib/jenkins/workspace/djs-demo_nodejs-demo_development
+                            #git pull origin master
+                            #npm install
+                            #pm2 restart app.js
+                        "
+                    """
+                }
+            }
+        }
+    }
+}
